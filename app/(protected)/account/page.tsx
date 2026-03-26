@@ -18,6 +18,6 @@ export default async function AccountPage() {
             </div>
         </div>
     }
-    const user = await getById<IUser, UserI>(User, userId);
+    const user = await getById<IUser, UserI>(User, userId, { password: 0 });
     return <UserInfo user={sanatizePayload(user)} />
 }

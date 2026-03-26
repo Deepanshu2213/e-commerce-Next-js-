@@ -17,6 +17,9 @@ export const updateUser = async (prevSate: any, formData: FormData): ActionError
     const UserData = Object.fromEntries(
         Array.from(formData.entries()).filter(([key, value]) => !key.startsWith('$') && value != '')
     );
+    if (typeof (UserData.address) === 'string') {
+        UserData.address = [UserData.address] as unknown as string;
+    }
     const user = updateUserSchema.safeParse(UserData);
     if (!user.success) {
         return {

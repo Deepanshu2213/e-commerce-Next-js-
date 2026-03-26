@@ -1,8 +1,9 @@
 'use client';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
-import { FaSearch, FaShoppingCart, FaUserCircle, FaBars, FaTimes } from 'react-icons/fa';
+import { FaSearch, FaShoppingCart, FaUserCircle, FaBars, FaTimes, FaSignOutAlt } from 'react-icons/fa';
 import { MdLocalMall } from 'react-icons/md';
+import { logout } from '../actions/logins.action';
 
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -12,7 +13,7 @@ export const Navbar = () => {
     { label: 'Home', href: '/' },
     { label: 'Products', href: '/products' },
     { label: 'Add Product', href: '/add-product' },
-    { label: 'Categories', href: '/categories' },
+    // { label: 'Categories', href: '/categories' },
     { label: 'About', href: '/about' },
   ];
 
@@ -59,13 +60,13 @@ export const Navbar = () => {
           {/* Right side icons */}
           <div className="flex items-center gap-3">
             {/* Search Icon */}
-            <button
+            {/* <button
               className="hidden sm:flex items-center justify-center w-10 h-10 rounded-full text-slate-400 hover:text-indigo-400 hover:bg-slate-800 hover:shadow-[0_0_15px_rgba(99,102,241,0.2)] transition-all duration-300 group"
               aria-label="Search"
               type="button"
             >
               <FaSearch className="text-lg group-hover:scale-110 transition-transform" />
-            </button>
+            </button> */}
 
             {/* Cart Icon */}
             <Link
@@ -89,6 +90,17 @@ export const Navbar = () => {
             >
               <FaUserCircle className="text-xl group-hover:scale-110 transition-transform" />
             </Link>
+
+            {/* Logout Icon Desktop */}
+            <form action={logout}>
+              <button
+                type="submit"
+                className="hidden sm:flex items-center justify-center w-10 h-10 rounded-full text-slate-400 hover:text-rose-400 hover:bg-rose-500/10 hover:shadow-[0_0_15px_rgba(244,63,94,0.2)] transition-all duration-300 group"
+                aria-label="Logout"
+              >
+                <FaSignOutAlt className="text-xl group-hover:scale-110 transition-transform" />
+              </button>
+            </form>
 
             {/* Mobile menu button */}
             <button
@@ -130,11 +142,15 @@ export const Navbar = () => {
               >
                 <FaUserCircle className="text-lg" /> Profile
               </Link>
-              <button
-                className="flex items-center justify-center gap-2 py-3 bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-400 rounded-xl font-medium transition-colors text-sm border border-indigo-500/20"
-              >
-                <FaSearch className="text-lg" /> Search
-              </button>
+              <form action={logout} className="contents">
+                <button
+                  type="submit"
+                  className="flex items-center justify-center gap-2 py-3 bg-rose-600/20 hover:bg-rose-600/30 text-rose-400 rounded-xl font-medium transition-colors text-sm border border-rose-500/20 w-full"
+                  onClick={() => setIsOpen(false)}
+                >
+                  <FaSignOutAlt className="text-lg" /> Logout
+                </button>
+              </form>
             </div>
           </div>
         </div>

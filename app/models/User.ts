@@ -5,6 +5,7 @@ export interface UserI {
   lastName?: string;
   email: string;
   password: string;
+  address?: string[];
 }
 
 export interface IUser extends Document {
@@ -13,6 +14,7 @@ export interface IUser extends Document {
   id: string;
   email: string;
   password: string;
+  address?: string[];
 }
 
 export interface IUserModel extends Model<IUser> {
@@ -24,6 +26,7 @@ export const userSchema = new Schema<IUser, IUserModel>({
   lastName: { type: String },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
+  address: { type: [String] }
 });
 
 userSchema.statics.login = async function (
@@ -48,12 +51,6 @@ userSchema.pre('save', async function () {
     const salt = await bcrypt.genSalt();
     this.password = await bcrypt.hash(this.password, salt);
   }
-});
-userSchema.pre('find', function () {
-  this.select('-password');
-});
-userSchema.pre('findOne', function () {
-  this.select('-password');
 });
 export const User =
   (mongoose.models.User as IUserModel) ||

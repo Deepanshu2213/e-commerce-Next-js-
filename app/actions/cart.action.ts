@@ -1,10 +1,11 @@
 'use server';
 import { cookies } from 'next/headers';
-import { getUserFromCookie, sanatizePayload } from '../utility/responseUtils';
+import { getUserFromCookie, getUserId, sanatizePayload } from '../utility/responseUtils';
 import { Cart, CartIterface } from '../models/Cart';
 import { CartItemsDb } from '../components/CartItem';
 import { paymentInfo } from '../api/paymentDetails/route';
 import { getCart as gtCart } from '../utility/dbCallUtil';
+import { revalidatePath } from 'next/cache';
 
 export const getCart = async () => {
   const cook = await cookies();
@@ -42,3 +43,14 @@ const calculateTotalAfterTax = (tax: number, cost: number): number => {
   const taxedAmount = (tax * cost) / 100;
   return cost + taxedAmount;
 };
+
+export const deleteProductFromCart = async (productId: string) => {
+  const UserId = await getUserId(await cookies());
+  if (!UserId) return;
+
+  await Cart.findOneAndUpdate(
+    { User: UserId },
+    { $pull: { ProductItem: { Product: productId } } }
+  );
+  revalidatePath('/cart');
+}

@@ -1,6 +1,8 @@
+import { getGooleAuthUrl } from '@/app/utility/responseUtils';
 import { loginFormSubmit } from '../../actions/logins.action';
 import { LoginSignUp } from '../../components/LoginSignup';
 
 export default function Login() {
-  return <LoginSignUp type="login" action={loginFormSubmit} />;
+  const url = getGooleAuthUrl();
+  return <LoginSignUp type="login" action={loginFormSubmit} url={url} />;
 }

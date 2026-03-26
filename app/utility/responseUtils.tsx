@@ -73,3 +73,19 @@ export const getUserId = async (
   const UserId = getUserFromCookie(token || '')?._id;
   return UserId;
 };
+export const getGooleAuthUrl = () => {
+  const baseUrl = 'https://accounts.google.com/o/oauth2/v2/auth';
+  const options = {
+    redirect_uri: process.env.VITE_PUBLIC_OAUTH_ENDPOINT,
+    client_id: process.env.VITE_GOOGLE_CLIENT_ID,
+    prompt: 'consent',
+    scope: [
+      'https://www.googleapis.com/auth/userinfo.email',
+      'https://www.googleapis.com/auth/userinfo.profile',
+    ].join(' '),
+    response_type: 'code',
+    access_type: 'offline',
+  };
+  const qs = new URLSearchParams(options as any);
+  return `${baseUrl}?${qs.toString()}`;
+};

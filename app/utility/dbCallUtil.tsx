@@ -9,11 +9,12 @@ export const getKey = <T extends Document>(
 export const getById = async <T extends Document, L>(
   model: Model<T>,
   id: string,
+  projection?: Record<string, 1 | 0>,
 ): Promise<L | null> => {
   const cachedFn = unstable_cache(
     async () => {
       console.log('db hit' + getKey<T>(model, id));
-      return await model.findById(id).lean<L>();
+      return await model.findById(id).select(projection || {}).lean<L>();
     },
     [getKey<T>(model, id)],
     {
@@ -78,3 +79,21 @@ export const getCart = async <T extends Document, L>(
   );
   return await cacheFn();
 };
+export const getCartModel = async <T extends Document>(
+  userId: string,
+  model: Model<T>,
+): Promise<T | null> => {
+  const cacheFn = unstable_cache(
+    async () => {
+      console.log('db hit' + getKey<T>(model, userId));
+      return await model
+        .findOne({ User: userId })
+        .populate('ProductItem.Product');
+    },
+    [getKey<T>(model, userId)],
+    {
+      tags: [getKey<T>(model, userId)],
+    },
+  );
+  return await cacheFn();
+}

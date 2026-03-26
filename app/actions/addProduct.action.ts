@@ -7,11 +7,8 @@ import {
 import { ActionError } from '../interfaces/ErrorRes';
 import { redirect } from 'next/navigation';
 import { Product, ProductInt } from '../models/Product';
-import { revalidatePath, revalidateTag } from 'next/cache';
-import path from 'path';
-import { writeFile, mkdir } from 'fs/promises';
+import { revalidatePath } from 'next/cache';
 import { ProductSchema } from '@/middleware';
-import { getKey } from '../utility/dbCallUtil';
 import cloudinary from '../utility/cloudinary';
 import { UploadApiResponse } from 'cloudinary';
 export const addProduct = async (

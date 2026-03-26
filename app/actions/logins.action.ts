@@ -54,16 +54,16 @@ export const signUpFormSubmit = async (
 }> => {
   try {
     await connectDB();
-    let user = Object.fromEntries(formData);
-    const safeUser = userSchema.safeParse(user);
+    let userInput = Object.fromEntries(formData);
+    const safeUser = userSchema.safeParse(userInput);
     if (!safeUser.success) {
       return {
         errors: safeUser.error.flatten().fieldErrors,
       };
     }
-    user = safeUser.data;
+    const user = safeUser.data;
     const userModel = new User(user);
-    await userModel.save(user);
+    await userModel.save();
     const signedToken = sign(
       userModel.toJSON(),
       process.env.SECRET_KEY as string,
@@ -89,4 +89,10 @@ export const signUpFormSubmit = async (
   }
 
   redirect('/dashboard');
+};
+
+export const logout = async () => {
+  const cook = await cookies();
+  cook.delete('token');
+  redirect('/login');
 };

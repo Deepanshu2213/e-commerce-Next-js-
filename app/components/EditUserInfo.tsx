@@ -37,7 +37,7 @@ export const UserInfo = ({ user }: { user: UserI | null }) => {
                     </div>
                     <div className="col-span-2 row-span-4">
                         <label htmlFor="address" className="block text-slate-400 text-sm sm:text-base p-2">Address <span className="text-rose-500">*</span></label>
-                        <textarea id="address" name="address" className="w-full min-w-0 px-4 py-2 rounded-lg bg-slate-950/50 border border-slate-700 text-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent" placeholder="Enter the address"></textarea>
+                        <textarea id="address" name="address" className="w-full min-w-0 px-4 py-2 rounded-lg bg-slate-950/50 border border-slate-700 text-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent" placeholder="Enter the address" defaultValue={user?.address?.[0] || ''}></textarea>
                         {GetErrorElements('address', errors)}
                     </div>
                     <div className="col-span-1 md:col-span-2">

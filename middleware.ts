@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { jwtVerify } from 'jose';
 import z from './node_modules/zod/v4/classic/external.cjs';
-const PUBLIC_ROUTES = ['/', '/login', '/forgot', '/signup'];
+const PUBLIC_ROUTES = ['/login', '/forgot', '/signup'];
 interface tokenPayload {
   id?: string;
   email?: string;
