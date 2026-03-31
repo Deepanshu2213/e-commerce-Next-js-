@@ -93,12 +93,12 @@ export default async function Dashboard() {
       {/* Featured Products Section */}
       <section className="px-4 py-8 md:px-8 max-w-7xl mx-auto">
         <div className="flex items-center justify-between mb-8">
-          <h2 className="text-2xl md:text-3xl font-bold text-white tracking-wide">
+          <h2 className="text-xl px-1 md:text-2xl lg:text-3xl font-bold text-white tracking-wide">
             Featured Products
           </h2>
           <Link
             href="/products"
-            className="group flex items-center gap-2 text-indigo-400 hover:text-indigo-300 font-medium transition-colors text-sm md:text-base bg-indigo-500/10 px-4 py-2 rounded-full border border-indigo-500/20 hover:bg-indigo-500/20"
+            className="group flex items-center gap-2 text-indigo-400 hover:text-indigo-300 font-medium transition-colors text-sm md:text-base bg-indigo-500/10 px-2 py-1 md:px-4 md:py-2 rounded-full border border-indigo-500/20 hover:bg-indigo-500/20"
           >
             Explore All
             <span className="group-hover:translate-x-1 transition-transform">→</span>

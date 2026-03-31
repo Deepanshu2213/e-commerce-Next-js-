@@ -115,7 +115,7 @@ export const Btn = ({
       {/* Decrease */}
       <button
         disabled={isLoading || quantity === 0}
-        className="w-7 h-7 flex items-center justify-center rounded-lg text-slate-400 hover:text-white hover:bg-slate-700 disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-150 font-bold text-lg leading-none select-none"
+        className="w-4 h-4 md:w-7 md:h-7 flex items-center justify-center rounded-lg text-slate-400 hover:text-white hover:bg-slate-700 disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-150 font-bold text-lg leading-none select-none"
         aria-label="Decrease quantity"
         onClick={handleDecrease}
       >
@@ -123,7 +123,7 @@ export const Btn = ({
       </button>
 
       {/* Count / Loader */}
-      <span className="w-8 text-center text-sm font-semibold text-slate-100 tabular-nums">
+      <span className="w-5 md:w-8 text-center text-sm font-semibold text-slate-100 tabular-nums">
         {isLoading ? (
           <span className="inline-block w-4 h-4 border-2 border-slate-600 border-t-indigo-400 rounded-full animate-spin" />
         ) : (
@@ -134,7 +134,7 @@ export const Btn = ({
       {/* Increase */}
       <button
         disabled={isLoading}
-        className="w-7 h-7 flex items-center justify-center rounded-lg text-slate-400 hover:text-white hover:bg-indigo-600 disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-150 font-bold text-lg leading-none select-none"
+        className="w-4 h-4 md:w-7 md:h-7  flex items-center justify-center rounded-lg text-slate-400 hover:text-white hover:bg-indigo-600 disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-150 font-bold text-lg leading-none select-none"
         aria-label="Increase quantity"
         onClick={handleIncrease}
       >

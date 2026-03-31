@@ -18,7 +18,7 @@ export const Navbar = () => {
   ];
 
   return (
-    <nav className={`sticky top-0 z-10 w-full transition-all duration-500 ease-in-out ${true
+    <nav className={`sticky top-0 z-10 w-full transition-all duration-500 ease-in-out z-[999] ${true
       ? 'bg-slate-950/80 backdrop-blur-sm border-b border-slate-700/40 shadow-2xl shadow-black/50 py-1'
       : 'bg-slate-950/20 border-b border-transparent py-2'
       }`}>

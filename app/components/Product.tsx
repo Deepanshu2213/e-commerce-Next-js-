@@ -28,7 +28,7 @@ export const Product = ({
 }) => {
   const { _id: id } = product;
   return (
-    <div className="bg-slate-950 border border-slate-800 rounded-lg p-4 shadow-md hover:shadow-lg transition-shadow card-hover">
+    <div className="bg-slate-950 border border-slate-800 rounded-lg p-3 md:p-4 shadow-md hover:shadow-lg transition-shadow card-hover">
       <div className="relative">
         <Image
           src={product.imageUrl}
