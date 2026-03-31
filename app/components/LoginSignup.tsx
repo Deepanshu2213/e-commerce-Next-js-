@@ -37,7 +37,7 @@ export const LoginSignUp = ({ type, action, url }: LoginSignUpProps) => {
             {type === 'login' ? 'Please enter your details to login' : 'Sign up to get started'}
           </p>
         </div>
-        <a href={url || '/login'} className='w-full justify-items-center'>
+        <a href={url || '/login'} className='w-full flex justify-center'>
           <button
             type="button"
             className="w-full max-w-[85%] p-3 border border-slate-700/60 rounded-xl text-slate-100 bg-slate-800/50 hover:bg-slate-700/60 hover:border-slate-500/80 hover:shadow-lg hover:shadow-indigo-500/10 active:scale-[0.98] transition-all duration-300 font-semibold flex items-center justify-center gap-3 group"
