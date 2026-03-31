@@ -33,7 +33,7 @@ export const getPaymentDetails = async (): Promise<paymentInfo | null> => {
     }, 0) || 0;
   const tax = await getCostTaxBasedLoc();
   const priceAfterTax = calculateTotalAfterTax(tax, cost);
-  return { price: cost, priceAfterTax, tax } as paymentInfo;
+  return { price: cost, priceAfterTax, tax, cart: cartDb } as paymentInfo;
 };
 const getCostTaxBasedLoc = async (): Promise<number> => {
   return 8;

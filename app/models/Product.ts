@@ -1,4 +1,4 @@
-import mongoose, { Document, Model, model, Schema, Types } from 'mongoose';
+import { Document, Model, Schema, Types, models, model } from 'mongoose';
 
 export interface ProductInt {
   name: string;
@@ -28,5 +28,5 @@ const productSchema = new Schema<ProductInterface, ProductModel>({
 });
 
 export const Product =
-  (mongoose.models.Product as ProductModel) ||
+  (models.Product as ProductModel) ||
   model<ProductInterface, ProductModel>('Product', productSchema);

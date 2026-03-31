@@ -13,12 +13,12 @@ export const Navbar = () => {
     { label: 'Home', href: '/' },
     { label: 'Products', href: '/products' },
     { label: 'Add Product', href: '/add-product' },
-    // { label: 'Categories', href: '/categories' },
+    { label: 'Orders', href: '/orders' },
     { label: 'About', href: '/about' },
   ];
 
   return (
-    <nav className={`sticky top-0 z-50 w-full transition-all duration-500 ease-in-out ${true
+    <nav className={`sticky top-0 z-10 w-full transition-all duration-500 ease-in-out ${true
       ? 'bg-slate-950/80 backdrop-blur-sm border-b border-slate-700/40 shadow-2xl shadow-black/50 py-1'
       : 'bg-slate-950/20 border-b border-transparent py-2'
       }`}>

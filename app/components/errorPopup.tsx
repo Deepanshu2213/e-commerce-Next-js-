@@ -1,5 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 
 export const ErrorPopup = ({
   error,
@@ -9,7 +10,7 @@ export const ErrorPopup = ({
   onClose?: () => void;
 }) => {
   return (
-    <div className="fixed top-4 left-1/2 transform -translate-x-1/2 w-full max-w-md px-4 z-50 animate-in fade-in slide-in-from-top-2 duration-300">
+    <div className="fixed top-4 left-1/2 transform -translate-x-1/2 w-full max-w-md px-4 z-[9999] animate-in fade-in slide-in-from-top-2 duration-300">
       <div className="bg-slate-900/80 backdrop-blur text-slate-100 rounded-lg shadow-xl overflow-hidden border border-red-500/30 border-l-4 border-l-red-500">
         {/* Header with icon */}
         <div className="flex items-start gap-3 p-4">
@@ -77,13 +78,18 @@ export const ErrorPopupWrapper = ({
 }: {
   error: Record<string, string[] | undefined>;
 }) => {
-  debugger;
   const [showPopup, setShowPopup] = useState(false);
+  // Track client mount to avoid SSR mismatch (document is not available on server)
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     if (!error || Object.keys(error).length === 0) return;
     setShowPopup(true);
-    let timer = setTimeout(() => {
+    const timer = setTimeout(() => {
       setShowPopup(false);
     }, 5000);
     return () => clearTimeout(timer);
@@ -93,14 +99,15 @@ export const ErrorPopupWrapper = ({
     setShowPopup(false);
   };
 
-  return (
-    <div
-      className="animate-out fade-out slide-out-to-top-2 duration-300"
-      style={{
-        animation: showPopup ? 'none' : 'fadeOut 0.3s ease-out forwards',
-      }}
-    >
-      {showPopup && <ErrorPopup error={error} onClose={handleClose} />}
-    </div>
+  // Don't render on the server or when there's nothing to show
+  if (!mounted || !showPopup) return null;
+
+  // createPortal teleports the popup node directly into document.body.
+  // This completely escapes any CSS stacking context created by ancestor
+  // elements that use backdrop-filter (like the sticky navbar with
+  // backdrop-blur-sm), which would otherwise trap fixed children below.
+  return createPortal(
+    <ErrorPopup error={error} onClose={handleClose} />,
+    document.body,
   );
 };

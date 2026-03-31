@@ -1,5 +1,6 @@
 import { getPaymentDetails } from '@/app/actions/cart.action';
 import { OrderBtn } from '@/app/components/PlaceOrderBtn';
+import { sanatizePayload } from '@/app/utility/responseUtils';
 import Script from 'next/script';
 const CheckOut = async () => {
   const data = await getPaymentDetails();
@@ -36,7 +37,7 @@ const CheckOut = async () => {
           </span>
         </div>
 
-        <OrderBtn paymentKey={process.env.RAZORPAY_KEY_ID || ''} />
+        <OrderBtn paymentKey={process.env.RAZORPAY_KEY_ID || ''} cart={sanatizePayload(data?.cart)} />
       </div>
     </>
 

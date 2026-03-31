@@ -101,6 +101,9 @@ export const Btn = ({
           Product,
           quantity: prev,
           Price: Product.price,
+          name: Product.name,
+          image: Product.imageUrl,
+          description: Product.description,
         },
       };
       updateCart(payload);
@@ -108,30 +111,30 @@ export const Btn = ({
     [],
   );
   return (
-    <div className="flex items-center gap-2 border border-slate-700 rounded-lg px-2 py-1">
+    <div className="inline-flex items-center gap-1 bg-slate-800/60 border border-slate-700/60 rounded-xl px-1.5 py-1">
+      {/* Decrease */}
       <button
-        disabled={isLoading}
-        className={`text-slate-400 hover:text-slate-200 font-semibold cursor-pointer w-[1vw] h-[1vh] flex items-center justify-center transition-all duration-200 ${
-          isLoading ? 'opacity-50 cursor-not-allowed' : ''
-        }`}
+        disabled={isLoading || quantity === 0}
+        className="w-7 h-7 flex items-center justify-center rounded-lg text-slate-400 hover:text-white hover:bg-slate-700 disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-150 font-bold text-lg leading-none select-none"
         aria-label="Decrease quantity"
         onClick={handleDecrease}
       >
         −
       </button>
-      <span className="text-slate-100 font-medium w-[3vh] h-[3vh] text-center flex items-center justify-center">
+
+      {/* Count / Loader */}
+      <span className="w-8 text-center text-sm font-semibold text-slate-100 tabular-nums">
         {isLoading ? (
-          // <span className="animate-spin inline-block w-5 h-5 border-2 border-slate-500 border-t-slate-100 rounded-full"></span>
-          <BiLoaderCircle className="text-md" />
+          <span className="inline-block w-4 h-4 border-2 border-slate-600 border-t-indigo-400 rounded-full animate-spin" />
         ) : (
           quantity
         )}
       </span>
+
+      {/* Increase */}
       <button
         disabled={isLoading}
-        className={`text-slate-400 hover:text-slate-200 cursor-pointer font-semibold w-[1vw] h-[1vh] flex items-center justify-center transition-all duration-200 ${
-          isLoading ? 'opacity-50 cursor-not-allowed' : ''
-        }`}
+        className="w-7 h-7 flex items-center justify-center rounded-lg text-slate-400 hover:text-white hover:bg-indigo-600 disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-150 font-bold text-lg leading-none select-none"
         aria-label="Increase quantity"
         onClick={handleIncrease}
       >

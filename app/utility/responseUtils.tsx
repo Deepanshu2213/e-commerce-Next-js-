@@ -89,3 +89,14 @@ export const getGooleAuthUrl = () => {
   const qs = new URLSearchParams(options as any);
   return `${baseUrl}?${qs.toString()}`;
 };
+
+export const isValidResponse = async <T,>(response: Response) => {
+  const data = await response.json();
+  const error: Record<string, string[]> = {}
+  if (!response.ok) {
+    if (Object.keys(data.errors).length <= 0) {
+      error['ERROR'] = [`Failed: ${response.status}`];
+    }
+  }
+  return { data: data as T, error: data.errors || error }; // only once ✅
+};

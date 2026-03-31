@@ -1,15 +1,18 @@
-import mongoose, { Document, Model, Schema } from 'mongoose';
+import { Document, Model, Schema, Types, models, model } from 'mongoose';
 export interface CartI {
   ProductItem: {
-    Product: mongoose.Types.ObjectId;
+    Product: Types.ObjectId;
     quantity: number;
     Price: number;
+    name: string;
+    image: string;
+    description: string;
   }[];
-  User: mongoose.Types.ObjectId;
+  User: Types.ObjectId;
 }
-export interface CartIterface extends Document, CartI {}
+export interface CartIterface extends Document, CartI { }
 
-export interface CartModel extends Model<CartIterface> {}
+export interface CartModel extends Model<CartIterface> { }
 
 export const CartSchema = new Schema<CartIterface, CartModel>({
   ProductItem: [
@@ -27,6 +30,18 @@ export const CartSchema = new Schema<CartIterface, CartModel>({
         type: Number,
         required: true,
       },
+      name: {
+        type: String,
+        required: true,
+      },
+      image: {
+        type: String,
+        required: true,
+      },
+      description: {
+        type: String,
+        required: true,
+      },
     },
   ],
   User: {
@@ -36,5 +51,5 @@ export const CartSchema = new Schema<CartIterface, CartModel>({
   },
 });
 export const Cart =
-  (mongoose.models.Cart as CartModel) ||
-  mongoose.model<CartIterface, CartModel>('Cart', CartSchema);
+  (models.Cart as CartModel) ||
+  model<CartIterface, CartModel>('Cart', CartSchema);

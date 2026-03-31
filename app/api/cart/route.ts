@@ -17,6 +17,9 @@ export const POST = async (req: NextRequest) => {
         Product: new mongoose.Types.ObjectId(ProductItem.Product._id),
         quantity: ProductItem.quantity,
         Price: ProductItem.Price,
+        name: ProductItem.name,
+        image: ProductItem.image,
+        description: ProductItem.description,
       },
     ],
   };
@@ -40,6 +43,7 @@ export const POST = async (req: NextRequest) => {
         Product: new mongoose.Types.ObjectId(ProductItem.Product._id),
       });
     }
+    cart.ProductItem = cart.ProductItem.filter((ele) => ele.quantity > 0);
     cart.save();
   }
   revalidateTag(getKey(Cart, userId), 'max');

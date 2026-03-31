@@ -8,7 +8,7 @@ import { ActionError } from '../interfaces/ErrorRes';
 import { redirect } from 'next/navigation';
 import { Product, ProductInt } from '../models/Product';
 import { revalidatePath } from 'next/cache';
-import { ProductSchema } from '@/middleware';
+import { ProductSchema } from '../lib/validators/Product';
 import cloudinary from '../utility/cloudinary';
 import { UploadApiResponse } from 'cloudinary';
 export const addProduct = async (
@@ -58,7 +58,13 @@ export const addProduct = async (
     stock: parseInt(formData.get('stock') as string, 10),
     User: UserId,
   };
-  const product = new Product(productData);
+  const validatedProduct = ProductSchema.safeParse(productData);
+  if (!validatedProduct.success) {
+    return {
+      errors: validatedProduct.error.flatten().fieldErrors || {},
+    };
+  }
+  const product = new Product(validatedProduct.data);
   await product.save();
   revalidatePath('/products');
   redirect('/products');

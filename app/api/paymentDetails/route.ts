@@ -6,6 +6,7 @@ export interface paymentInfo {
   price: number;
   priceAfterTax: number;
   tax: number;
+  cart: CartItemsDb;
 }
 export const GET = async (req: NextRequest) => {
   const cookies = req.cookies;
@@ -22,11 +23,11 @@ export const GET = async (req: NextRequest) => {
     status: 200,
   });
 };
-const getCostTaxBasedLoc = async (): Promise<number> => {
+export const getCostTaxBasedLoc = async (): Promise<number> => {
   return 8;
 };
 
-const calculateTotalAfterTax = (tax: number, cost: number): number => {
+export const calculateTotalAfterTax = (tax: number, cost: number): number => {
   const taxedAmount = (tax * cost) / 100;
   return cost + taxedAmount;
 };

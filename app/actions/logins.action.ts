@@ -12,6 +12,7 @@ export const loginFormSubmit = async (
   prevState: any,
   formData: FormData,
 ): ActionError => {
+  await connectDB();
   //const issues = new Map<string, string[]>();
   const rawUser = Object.fromEntries(formData);
 
