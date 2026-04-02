@@ -58,8 +58,9 @@ export const POST = async (req: NextRequest) => {
         cart.ProductItem = [];
         await Promise.all([order.save(), cart.save()]);
         revalidatePath('/cart');
-        revalidateTag(getKey(Cart), 'max');
-        revalidateTag(getKey(Order), 'max');
+        revalidatePath('/orders', 'layout');
+        revalidateTag(getKey(Cart, userId), 'max');
+        revalidateTag(getKey(Order, userId), 'max');
         return NextResponse.json({ success: true, order });
     } catch (err: any) {
         return NextResponse.json(

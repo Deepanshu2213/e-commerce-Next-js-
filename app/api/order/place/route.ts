@@ -5,6 +5,8 @@ import { RazorPayUtil } from "@/app/utility/razorpay";
 import { getUserFromCookie } from "@/app/utility/responseUtils";
 import { NextRequest, NextResponse } from "next/server";
 import { calculateTotalAfterTax, getCostTaxBasedLoc } from "../../paymentDetails/route";
+import { revalidatePath, revalidateTag } from "next/cache";
+import { getKey } from "@/app/utility/dbCallUtil";
 export interface OrderDetails {
     success: boolean,
     orderId: string,
@@ -83,6 +85,9 @@ export const POST = async (req: NextRequest) => {
     const razorOrder = await razorpay.orders.create(options);
     order.payment_id = razorOrder.id;
     await order.save();
+    revalidatePath('/cart');
+    revalidatePath('/orders', 'layout');
+    revalidateTag(getKey(Order, userId), 'max');
     return NextResponse.json({
         success: true,
         orderId: order._id,

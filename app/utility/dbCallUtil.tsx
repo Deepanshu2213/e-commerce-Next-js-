@@ -6,6 +6,9 @@ export const getKey = <T extends Document>(
 ): string => {
   return `${model.modelName}-${id || ''}`;
 };
+export const getKeyWithCriteria = <T extends Document>(model: Model<T>, query: Record<string, any>, userId?: string) => {
+  return getKey<T>(model, userId) + JSON.stringify(query);
+}
 export const getById = async <T extends Document, L>(
   model: Model<T>,
   id: string,
@@ -96,4 +99,19 @@ export const getCartModel = async <T extends Document>(
     },
   );
   return await cacheFn();
+}
+
+export const getEntityListCriteria = async <T extends Document, L>(
+  model: Model<T>,
+  query: Record<string, any>,
+  userId?: string,
+): Promise<L[] | null> => {
+  const personalKey = getKeyWithCriteria<T>(model, query, userId);
+  const baseKey = getKey<T>(model, userId);
+  const cacheFn = unstable_cache(async () => {
+    return model.find(query).limit(50).sort({ createdAt: -1 }).lean<L[]>()
+  }, [personalKey], {
+    tags: [baseKey, personalKey]
+  })
+  return cacheFn();
 }
