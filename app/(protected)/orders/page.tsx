@@ -9,7 +9,7 @@ export type OrderJson = ReplaceAddTimestamp<OrderInt, 'User' | '_id'>;
 export default async function Order() {
     await connectDB();
     const userId = await getUserId(await cookies());
-    const orders = await getEntityListCriteria<OrderInterface, OrderJson>(OrderModel, { 'User': userId }, userId)
+    const orders = await getEntityListCriteria<OrderInterface, OrderJson>(OrderModel, { 'User': userId }, userId);
     const filters = [
         { label: "All", path: "/" },
         { label: "Pending", path: "/pending" },
