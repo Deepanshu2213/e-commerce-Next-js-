@@ -1,6 +1,7 @@
 import { OrderJson } from "../(protected)/orders/page"
 import { ProductItem } from "../models/Order"
 import { FiBox, FiChevronRight } from "react-icons/fi"
+import Image from "next/image"
 
 export const OrderCard = ({ order, product }: { order: OrderJson, product: ProductItem }) => {
     const isDelivered = order.status?.toLowerCase() === 'delivered';
@@ -32,9 +33,10 @@ export const OrderCard = ({ order, product }: { order: OrderJson, product: Produ
                 <div className="flex items-center gap-5">
                     {/* Image */}
                     <div className="relative w-24 h-24 sm:w-28 sm:h-28 flex-shrink-0 rounded-xl overflow-hidden border border-white/10 bg-slate-800 shadow-inner">
-                        <img
+                        <Image
                             src={product.image}
                             alt={product.name}
+                            fill
                             className="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110"
                         />
                         <div className="absolute inset-0 ring-1 ring-inset ring-black/10 rounded-xl pointer-events-none"></div>
